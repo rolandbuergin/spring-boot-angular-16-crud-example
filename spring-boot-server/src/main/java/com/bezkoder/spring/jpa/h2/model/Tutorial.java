@@ -1,6 +1,10 @@
 package com.bezkoder.spring.jpa.h2.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tutorials")
@@ -10,12 +14,17 @@ public class Tutorial {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
+  @NotBlank(message = "Titel darf nicht leer sein.")
   @Column(name = "title")
   private String title;
 
+  @NotBlank(message = "Beschreibung darf nicht leer sein.")
   @Column(name = "description")
   private String description;
 
+  @NotNull(message = "Einwohner ist erforderlich.")
+  @Min(value = 0, message = "Einwohner darf nicht negativ sein.")
+  @Digits(integer = 10, fraction = 0, message = "Einwohner muss eine ganze Zahl sein.")
   @Column(name = "einwohner")
   private Integer einwohner;
 

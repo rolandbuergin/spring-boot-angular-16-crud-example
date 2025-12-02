@@ -32,16 +32,21 @@
 <ng-template #editable>
   <div *ngIf="currentTutorial.id" class="edit-form">
     <h4>Tutorial</h4>
-    <form>
+    <form #updateForm="ngForm" (ngSubmit)="updateTutorial(updateForm)" novalidate>
       <div class="form-group">
         <label for="title">Title</label>
         <input
           type="text"
           class="form-control"
           id="title"
+          required
           [(ngModel)]="currentTutorial.title"
           name="title"
+          #title="ngModel"
         />
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger small">
+          Titel ist erforderlich.
+        </div>
       </div>
       <div class="form-group">
         <label for="description">Description</label>
@@ -49,9 +54,14 @@
           type="text"
           class="form-control"
           id="description"
+          required
           [(ngModel)]="currentTutorial.description"
           name="description"
+          #description="ngModel"
         />
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger small">
+          Beschreibung ist erforderlich.
+        </div>
       </div>
 
       <div class="form-group">
@@ -60,9 +70,20 @@
           type="number"
           class="form-control"
           id="einwohner"
+          required
+          min="0"
+          step="1"
+          pattern="^[0-9]+$"
+          inputmode="numeric"
           [(ngModel)]="currentTutorial.einwohner"
           name="einwohner"
+          #einwohner="ngModel"
         />
+        <div *ngIf="einwohner.invalid && (einwohner.dirty || einwohner.touched)" class="text-danger small">
+          <div *ngIf="einwohner.errors?.['required']">Einwohner ist erforderlich.</div>
+          <div *ngIf="einwohner.errors?.['min']">Einwohner darf nicht negativ sein.</div>
+          <div *ngIf="einwohner.errors?.['pattern']">Einwohner muss eine ganze Zahl sein.</div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -93,10 +114,12 @@
     <button
       type="submit"
       class="badge badge-success mb-2"
-      (click)="updateTutorial()"
+      (click)="updateTutorial(updateForm)"
+      [disabled]="updateForm.invalid"
     >
       Update
     </button>
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
     <p>{{ message }}</p>
   </div>
 

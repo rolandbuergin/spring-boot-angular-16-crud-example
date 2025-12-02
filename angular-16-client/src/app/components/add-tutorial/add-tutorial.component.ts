@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Tutorial } from 'src/app/models/tutorial.model';
 import { TutorialService } from 'src/app/services/tutorial.service';
 
@@ -15,10 +16,15 @@ export class AddTutorialComponent {
     published: false
   };
   submitted = false;
+  errorMessage = '';
 
   constructor(private tutorialService: TutorialService) {}
 
-  saveTutorial(): void {
+  saveTutorial(form: NgForm): void {
+    if (form.invalid) {
+      return;
+    }
+
     const data = {
       title: this.tutorial.title,
       description: this.tutorial.description,
@@ -29,18 +35,37 @@ export class AddTutorialComponent {
       next: (res) => {
         console.log(res);
         this.submitted = true;
+        this.errorMessage = '';
       },
-      error: (e) => console.error(e)
+      error: (error) => {
+        console.error(error);
+        this.errorMessage = this.buildErrorMessage(error);
+      }
     });
   }
 
   newTutorial(): void {
     this.submitted = false;
+    this.errorMessage = '';
     this.tutorial = {
       title: '',
       description: '',
       einwohner: undefined,
       published: false
     };
+  }
+
+  private buildErrorMessage(error: any): string {
+    if (error?.error) {
+      if (typeof error.error === 'string') {
+        return error.error;
+      }
+
+      if (typeof error.error === 'object') {
+        return Object.values(error.error).join(' ');
+      }
+    }
+
+    return 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
   }
 }

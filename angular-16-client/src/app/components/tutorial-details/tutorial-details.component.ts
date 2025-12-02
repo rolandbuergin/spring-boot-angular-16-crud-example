@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { TutorialService } from 'src/app/services/tutorial.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tutorial } from 'src/app/models/tutorial.model';
@@ -8,7 +9,7 @@ import { Tutorial } from 'src/app/models/tutorial.model';
   templateUrl: './tutorial-details.component.html',
   styleUrls: ['./tutorial-details.component.css'],
 })
-export class TutorialDetailsComponent {
+export class TutorialDetailsComponent implements OnInit {
   @Input() viewMode = false;
 
   @Input() currentTutorial: Tutorial = {
@@ -19,6 +20,7 @@ export class TutorialDetailsComponent {
   };
 
   message = '';
+  errorMessage = '';
 
   constructor(
     private tutorialService: TutorialService,
@@ -65,8 +67,13 @@ export class TutorialDetailsComponent {
     });
   }
 
-  updateTutorial(): void {
+  updateTutorial(form: NgForm): void {
+    if (form.invalid) {
+      return;
+    }
+
     this.message = '';
+    this.errorMessage = '';
 
     this.tutorialService
       .update(this.currentTutorial.id, this.currentTutorial)
@@ -77,7 +84,10 @@ export class TutorialDetailsComponent {
             ? res.message
             : 'This tutorial was updated successfully!';
         },
-        error: (e) => console.error(e)
+        error: (error) => {
+          console.error(error);
+          this.errorMessage = this.buildErrorMessage(error);
+        }
       });
   }
 
@@ -89,5 +99,19 @@ export class TutorialDetailsComponent {
       },
       error: (e) => console.error(e)
     });
+  }
+
+  private buildErrorMessage(error: any): string {
+    if (error?.error) {
+      if (typeof error.error === 'string') {
+        return error.error;
+      }
+
+      if (typeof error.error === 'object') {
+        return Object.values(error.error).join(' ');
+      }
+    }
+
+    return 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
   }
 }
