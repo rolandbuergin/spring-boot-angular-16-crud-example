@@ -9,6 +9,10 @@
       {{ currentTutorial.description }}
     </div>
     <div>
+      <label><strong>Einwohner:</strong></label>
+      {{ currentTutorial.einwohner }}
+    </div>
+    <div>
       <label><strong>Status:</strong></label>
       {{ currentTutorial.published ? "Published" : "Pending" }}
     </div>
@@ -47,6 +51,17 @@
           id="description"
           [(ngModel)]="currentTutorial.description"
           name="description"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="einwohner">Einwohner</label>
+        <input
+          type="number"
+          class="form-control"
+          id="einwohner"
+          [(ngModel)]="currentTutorial.einwohner"
+          name="einwohner"
         />
       </div>
 
