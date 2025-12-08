@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TutorialService } from 'src/app/services/tutorial.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Tutorial } from 'src/app/models/tutorial.model';
 
 @Component({
@@ -24,8 +24,7 @@ export class TutorialDetailsComponent implements OnInit {
 
   constructor(
     private tutorialService: TutorialService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -95,16 +94,6 @@ export class TutorialDetailsComponent implements OnInit {
           this.errorMessage = this.buildErrorMessage(error);
         }
       });
-  }
-
-  deleteTutorial(): void {
-    this.tutorialService.delete(this.currentTutorial.id).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.router.navigate(['/tutorials']);
-      },
-      error: (e) => console.error(e)
-    });
   }
 
   private buildErrorMessage(error: any): string {
