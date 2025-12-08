@@ -2,7 +2,7 @@
   <div *ngIf="currentTutorial.id">
     <h4>Tutorial</h4>
     <div>
-      <label><strong>Title:</strong></label> {{ currentTutorial.title }}
+      <label><strong>Name:</strong></label> {{ currentTutorial.title }}
     </div>
     <div>
       <label><strong>Description:</strong></label>
@@ -34,7 +34,7 @@
     <h4>Tutorial</h4>
     <form #updateForm="ngForm" (ngSubmit)="updateTutorial(updateForm)" novalidate>
       <div class="form-group">
-        <label for="title">Title</label>
+        <label for="title">Name</label>
         <input
           type="text"
           class="form-control"
