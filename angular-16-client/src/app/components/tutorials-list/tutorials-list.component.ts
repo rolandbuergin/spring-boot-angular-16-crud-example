@@ -40,16 +40,6 @@ export class TutorialsListComponent {
     this.currentIndex = index;
   }
 
-  removeAllTutorials(): void {
-    this.tutorialService.deleteAll().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.refreshList();
-      },
-      error: (e) => console.error(e)
-    });
-  }
-
   searchTitle(): void {
     this.currentTutorial = {};
     this.currentIndex = -1;

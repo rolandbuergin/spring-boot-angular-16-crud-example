@@ -1,0 +1,8 @@
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.alert-info {
+  margin-top: 1rem;
+}
