@@ -12,6 +12,7 @@ import { TutorialsListComponent } from './components/tutorials-list/tutorials-li
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     TutorialsListComponent,
     LoginComponent,
     RegisterComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule,

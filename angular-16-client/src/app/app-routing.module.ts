@@ -5,6 +5,7 @@ import { TutorialDetailsComponent } from './components/tutorial-details/tutorial
 import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'tutorials', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'add', component: AddTutorialComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent }
+  { path: 'admin', component: AdminComponent }
 ];
 
 @NgModule({

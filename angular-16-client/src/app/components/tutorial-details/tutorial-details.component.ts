@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TutorialService } from 'src/app/services/tutorial.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Tutorial } from 'src/app/models/tutorial.model';
 import { AuthService } from 'src/app/services/auth.service';
 
