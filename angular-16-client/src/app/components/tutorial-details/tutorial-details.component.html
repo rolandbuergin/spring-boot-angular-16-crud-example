@@ -40,14 +40,14 @@
           class="form-control"
           id="title"
           required
-          pattern="^\\S(?:.*\\S)?$"
+          pattern="^(?!\\s)(?!.*\\s$).+$"
           [(ngModel)]="currentTutorial.title"
           name="title"
           #title="ngModel"
         />
         <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger small">
           <div *ngIf="title.errors?.['required']">Titel ist erforderlich.</div>
-          <div *ngIf="title.errors?.['pattern']">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
+          <div *ngIf="title.errors?.['pattern'] && hasEdgeWhitespace(currentTutorial.title)">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
         </div>
       </div>
       <div class="form-group">
@@ -57,14 +57,14 @@
           class="form-control"
           id="description"
           required
-          pattern="^\\S(?:.*\\S)?$"
+          pattern="^(?!\\s)(?!.*\\s$).+$"
           [(ngModel)]="currentTutorial.description"
           name="description"
           #description="ngModel"
         />
         <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger small">
           <div *ngIf="description.errors?.['required']">Beschreibung ist erforderlich.</div>
-          <div *ngIf="description.errors?.['pattern']">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
+          <div *ngIf="description.errors?.['pattern'] && hasEdgeWhitespace(currentTutorial.description)">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
         </div>
       </div>
 

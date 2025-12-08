@@ -72,6 +72,10 @@ export class AddTutorialComponent {
     return 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
   }
 
+  hasEdgeWhitespace(value?: string): boolean {
+    return value != null && (/^\s/.test(value) || /\s$/.test(value));
+  }
+
   private trimmedText(value?: string): string {
     return value?.trim() ?? '';
   }
