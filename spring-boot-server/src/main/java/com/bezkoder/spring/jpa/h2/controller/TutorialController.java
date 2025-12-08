@@ -35,15 +35,15 @@ public class TutorialController {
 	@Autowired
 	TutorialRepository tutorialRepository;
 
-	@GetMapping("/tutorials")
-	public ResponseEntity<List<Tutorial>> getAllTutorials(@RequestParam(required = false) String title) {
-		try {
-			List<Tutorial> tutorials = new ArrayList<Tutorial>();
+        @GetMapping("/tutorials")
+        public ResponseEntity<List<Tutorial>> getAllTutorials(@RequestParam(required = false) String title) {
+                try {
+                        List<Tutorial> tutorials = new ArrayList<Tutorial>();
 
-			if (title == null)
-				tutorialRepository.findAll().forEach(tutorials::add);
-			else
-				tutorialRepository.findByTitleContainingIgnoreCase(title).forEach(tutorials::add);
+                        if (title == null)
+                                tutorialRepository.findAll().forEach(tutorials::add);
+                        else
+                                tutorialRepository.findByTitleContainingIgnoreCase(title.trim()).forEach(tutorials::add);
 
 			if (tutorials.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -66,8 +66,9 @@ public class TutorialController {
 		}
 	}
 
-	@PostMapping("/tutorials")
+        @PostMapping("/tutorials")
         public ResponseEntity<?> createTutorial(@Valid @RequestBody Tutorial tutorial) {
+                sanitizeTutorialInput(tutorial);
                 try {
                         if (tutorialRepository.existsByTitleIgnoreCase(tutorial.getTitle())) {
                                 return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -88,6 +89,7 @@ public class TutorialController {
 
         @PutMapping("/tutorials/{id}")
         public ResponseEntity<?> updateTutorial(@PathVariable("id") long id, @Valid @RequestBody Tutorial tutorial) {
+                sanitizeTutorialInput(tutorial);
                 Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
 
                 if (tutorialData.isPresent()) {
@@ -135,7 +137,7 @@ public class TutorialController {
                 try {
                         List<Tutorial> tutorials = tutorialRepository.findByPublished(true);
 
-			if (tutorials.isEmpty()) {
+                        if (tutorials.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(tutorials, HttpStatus.OK);
@@ -153,6 +155,16 @@ public class TutorialController {
                         errors.put(fieldName, errorMessage);
                 });
                 return ResponseEntity.badRequest().body(errors);
+        }
+
+        private void sanitizeTutorialInput(Tutorial tutorial) {
+                if (tutorial.getTitle() != null) {
+                        tutorial.setTitle(tutorial.getTitle().trim());
+                }
+
+                if (tutorial.getDescription() != null) {
+                        tutorial.setDescription(tutorial.getDescription().trim());
+                }
         }
 
 }

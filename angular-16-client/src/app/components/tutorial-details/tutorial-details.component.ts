@@ -47,11 +47,14 @@ export class TutorialDetailsComponent implements OnInit {
 
   updatePublished(status: boolean): void {
     const data = {
-      title: this.currentTutorial.title,
-      description: this.currentTutorial.description,
+      title: this.trimmedText(this.currentTutorial.title),
+      description: this.trimmedText(this.currentTutorial.description),
       einwohner: this.currentTutorial.einwohner,
       published: status
     };
+
+    this.currentTutorial.title = data.title;
+    this.currentTutorial.description = data.description;
 
     this.message = '';
 
@@ -74,6 +77,9 @@ export class TutorialDetailsComponent implements OnInit {
 
     this.message = '';
     this.errorMessage = '';
+
+    this.currentTutorial.title = this.trimmedText(this.currentTutorial.title);
+    this.currentTutorial.description = this.trimmedText(this.currentTutorial.description);
 
     this.tutorialService
       .update(this.currentTutorial.id, this.currentTutorial)
@@ -113,5 +119,13 @@ export class TutorialDetailsComponent implements OnInit {
     }
 
     return 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
+  }
+
+  hasEdgeWhitespace(value?: string): boolean {
+    return value != null && (/^\s/.test(value) || /\s$/.test(value));
+  }
+
+  private trimmedText(value?: string): string {
+    return value?.trim() ?? '';
   }
 }
