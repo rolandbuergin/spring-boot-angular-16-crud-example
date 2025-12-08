@@ -54,7 +54,9 @@ export class TutorialsListComponent {
     this.currentTutorial = {};
     this.currentIndex = -1;
 
-    this.tutorialService.findByTitle(this.title).subscribe({
+    const trimmedTitle = this.title.trim();
+
+    this.tutorialService.findByTitle(trimmedTitle).subscribe({
       next: (data) => {
         this.tutorials = data;
         console.log(data);

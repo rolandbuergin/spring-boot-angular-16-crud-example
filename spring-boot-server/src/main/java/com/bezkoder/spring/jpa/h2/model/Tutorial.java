@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "tutorials")
@@ -15,10 +16,12 @@ public class Tutorial {
   private long id;
 
   @NotBlank(message = "Titel darf nicht leer sein.")
+  @Pattern(regexp = "^(?!\\s)(?!.*\\s$).+", message = "Titel darf nicht mit Leerzeichen beginnen oder enden.")
   @Column(name = "title")
   private String title;
 
   @NotBlank(message = "Beschreibung darf nicht leer sein.")
+  @Pattern(regexp = "^(?!\\s)(?!.*\\s$).+", message = "Beschreibung darf nicht mit Leerzeichen beginnen oder enden.")
   @Column(name = "description")
   private String description;
 
@@ -76,6 +79,17 @@ public class Tutorial {
 
   public void setPublished(boolean isPublished) {
     this.published = isPublished;
+  }
+
+  @PrePersist
+  @PreUpdate
+  private void trimFields() {
+    if (title != null) {
+      title = title.trim();
+    }
+    if (description != null) {
+      description = description.trim();
+    }
   }
 
   @Override

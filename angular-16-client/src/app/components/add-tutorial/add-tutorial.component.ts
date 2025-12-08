@@ -26,10 +26,13 @@ export class AddTutorialComponent {
     }
 
     const data = {
-      title: this.tutorial.title,
-      description: this.tutorial.description,
+      title: this.trimmedText(this.tutorial.title),
+      description: this.trimmedText(this.tutorial.description),
       einwohner: this.tutorial.einwohner
     };
+
+    this.tutorial.title = data.title;
+    this.tutorial.description = data.description;
 
     this.tutorialService.create(data).subscribe({
       next: (res) => {
@@ -67,5 +70,9 @@ export class AddTutorialComponent {
     }
 
     return 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
+  }
+
+  private trimmedText(value?: string): string {
+    return value?.trim() ?? '';
   }
 }
