@@ -32,6 +32,9 @@
 <ng-template #editable>
   <div *ngIf="currentTutorial.id" class="edit-form">
     <h4>Tutorial</h4>
+    <div class="alert alert-info" *ngIf="!authService.isAuthenticated()">
+      Änderungen sind nur nach Anmeldung als Redakteur möglich.
+    </div>
     <form #updateForm="ngForm" (ngSubmit)="updateTutorial(updateForm)" novalidate>
       <div class="form-group">
         <label for="title">Name</label>
@@ -100,6 +103,7 @@
       class="badge badge-primary mr-2"
       *ngIf="currentTutorial.published"
       (click)="updatePublished(false)"
+      [disabled]="!authService.isAuthenticated()"
     >
       UnPublish
     </button>
@@ -107,14 +111,20 @@
       *ngIf="!currentTutorial.published"
       class="badge badge-primary mr-2"
       (click)="updatePublished(true)"
+      [disabled]="!authService.isAuthenticated()"
     >
       Publish
     </button>
+
+    <button class="badge badge-danger mr-2" (click)="deleteTutorial()" [disabled]="!authService.isAuthenticated()">
+      Delete
+    </button>
+
     <button
       type="submit"
       class="badge badge-success mb-2"
       (click)="updateTutorial(updateForm)"
-      [disabled]="updateForm.invalid"
+      [disabled]="updateForm.invalid || !authService.isAuthenticated()"
     >
       Update
     </button>

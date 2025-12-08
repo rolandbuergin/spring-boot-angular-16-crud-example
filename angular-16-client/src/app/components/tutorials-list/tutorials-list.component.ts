@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tutorial } from 'src/app/models/tutorial.model';
 import { TutorialService } from 'src/app/services/tutorial.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tutorials-list',
@@ -13,7 +14,7 @@ export class TutorialsListComponent {
   currentIndex = -1;
   title = '';
 
-  constructor(private tutorialService: TutorialService) {}
+  constructor(private tutorialService: TutorialService, public authService: AuthService) {}
 
   ngOnInit(): void {
     this.retrieveTutorials();
@@ -38,6 +39,20 @@ export class TutorialsListComponent {
   setActiveTutorial(tutorial: Tutorial, index: number): void {
     this.currentTutorial = tutorial;
     this.currentIndex = index;
+  }
+
+  removeAllTutorials(): void {
+    if (!this.authService.isAuthenticated()) {
+      return;
+    }
+
+    this.tutorialService.deleteAll().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.refreshList();
+      },
+      error: (e) => console.error(e)
+    });
   }
 
   searchTitle(): void {
