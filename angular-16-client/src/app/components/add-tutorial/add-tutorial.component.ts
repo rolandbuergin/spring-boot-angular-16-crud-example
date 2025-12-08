@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Tutorial } from 'src/app/models/tutorial.model';
 import { TutorialService } from 'src/app/services/tutorial.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-tutorial',
@@ -18,9 +19,14 @@ export class AddTutorialComponent {
   submitted = false;
   errorMessage = '';
 
-  constructor(private tutorialService: TutorialService) {}
+  constructor(private tutorialService: TutorialService, public authService: AuthService) {}
 
   saveTutorial(form: NgForm): void {
+    if (!this.authService.isAuthenticated()) {
+      this.errorMessage = 'Bitte melden Sie sich als Redakteur an, um Änderungen zu speichern.';
+      return;
+    }
+
     if (form.invalid) {
       return;
     }

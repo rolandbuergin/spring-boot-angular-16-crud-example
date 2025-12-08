@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { TutorialService } from 'src/app/services/tutorial.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tutorial } from 'src/app/models/tutorial.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tutorial-details',
@@ -25,7 +26,8 @@ export class TutorialDetailsComponent implements OnInit {
   constructor(
     private tutorialService: TutorialService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +48,11 @@ export class TutorialDetailsComponent implements OnInit {
   }
 
   updatePublished(status: boolean): void {
+    if (!this.authService.isAuthenticated()) {
+      this.errorMessage = 'Bitte melden Sie sich als Redakteur an, um Änderungen zu speichern.';
+      return;
+    }
+
     const data = {
       title: this.trimmedText(this.currentTutorial.title),
       description: this.trimmedText(this.currentTutorial.description),
@@ -71,6 +78,11 @@ export class TutorialDetailsComponent implements OnInit {
   }
 
   updateTutorial(form: NgForm): void {
+    if (!this.authService.isAuthenticated()) {
+      this.errorMessage = 'Bitte melden Sie sich als Redakteur an, um Änderungen zu speichern.';
+      return;
+    }
+
     if (form.invalid) {
       return;
     }
@@ -98,6 +110,11 @@ export class TutorialDetailsComponent implements OnInit {
   }
 
   deleteTutorial(): void {
+    if (!this.authService.isAuthenticated()) {
+      this.errorMessage = 'Bitte melden Sie sich als Redakteur an, um Änderungen zu speichern.';
+      return;
+    }
+
     this.tutorialService.delete(this.currentTutorial.id).subscribe({
       next: (res) => {
         console.log(res);
