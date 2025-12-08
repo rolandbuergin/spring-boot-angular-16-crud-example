@@ -67,35 +67,47 @@ public class TutorialController {
 	}
 
 	@PostMapping("/tutorials")
-        public ResponseEntity<Tutorial> createTutorial(@Valid @RequestBody Tutorial tutorial) {
+        public ResponseEntity<?> createTutorial(@Valid @RequestBody Tutorial tutorial) {
                 try {
+                        if (tutorialRepository.existsByTitleIgnoreCase(tutorial.getTitle())) {
+                                return ResponseEntity.status(HttpStatus.CONFLICT)
+                                                .body("Eine Stadt mit diesem Namen existiert bereits.");
+                        }
+
                         Tutorial _tutorial = tutorialRepository.save(
                                         new Tutorial(
                                                         tutorial.getTitle(),
                                                         tutorial.getDescription(),
                                                         tutorial.getEinwohner(),
                                                         false));
-			return new ResponseEntity<>(_tutorial, HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+                        return new ResponseEntity<>(_tutorial, HttpStatus.CREATED);
+                } catch (Exception e) {
+                        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+        }
 
-	@PutMapping("/tutorials/{id}")
-        public ResponseEntity<Tutorial> updateTutorial(@PathVariable("id") long id, @Valid @RequestBody Tutorial tutorial) {
+        @PutMapping("/tutorials/{id}")
+        public ResponseEntity<?> updateTutorial(@PathVariable("id") long id, @Valid @RequestBody Tutorial tutorial) {
                 Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
 
-		if (tutorialData.isPresent()) {
+                if (tutorialData.isPresent()) {
+                        Optional<Tutorial> existingWithTitle = tutorialRepository.findByTitleIgnoreCase(tutorial.getTitle());
+
+                        if (existingWithTitle.isPresent() && existingWithTitle.get().getId() != id) {
+                                return ResponseEntity.status(HttpStatus.CONFLICT)
+                                                .body("Eine Stadt mit diesem Namen existiert bereits.");
+                        }
+
                         Tutorial _tutorial = tutorialData.get();
                         _tutorial.setTitle(tutorial.getTitle());
                         _tutorial.setDescription(tutorial.getDescription());
                         _tutorial.setEinwohner(tutorial.getEinwohner());
                         _tutorial.setPublished(tutorial.isPublished());
-			return new ResponseEntity<>(tutorialRepository.save(_tutorial), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
+                        return new ResponseEntity<>(tutorialRepository.save(_tutorial), HttpStatus.OK);
+                } else {
+                        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+        }
 
 	@DeleteMapping("/tutorials/{id}")
 	public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
