@@ -1,4 +1,10 @@
 .edit-form {
-  max-width: 400px;
-  margin: auto;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.detail-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }

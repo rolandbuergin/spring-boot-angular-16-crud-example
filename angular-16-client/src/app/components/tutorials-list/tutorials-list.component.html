@@ -1,51 +1,76 @@
-<div class="list row">
-  <div class="col-md-8">
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search by title"
-        [(ngModel)]="title"
-      />
-      <div class="input-group-append">
+<div class="row g-4 align-items-stretch">
+  <div class="col-lg-4">
+    <div class="glass-card p-4 h-100 search-card">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="pill-tag">
+          🔎
+          Suche
+        </div>
+        <span class="muted-label">Live Filter</span>
+      </div>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nach Stadtnamen suchen"
+          [(ngModel)]="title"
+        />
         <button
           class="btn btn-outline-secondary"
           type="button"
           (click)="searchTitle()"
         >
-          Search
+          Finden
         </button>
+      </div>
+      <div class="muted-help">Tippe einen Namen und entdecke kuratierte Einträge.</div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="glass-card p-4 h-100 d-flex flex-column">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Städteliste</h4>
+        <span class="pill-tag">{{ tutorials.length }} Einträge</span>
+      </div>
+      <ul class="list-group city-list flex-grow-1">
+        <li
+          class="list-group-item"
+          *ngFor="let tutorial of tutorials; let i = index"
+          [class.active]="i == currentIndex"
+          (click)="setActiveTutorial(tutorial, i)"
+        >
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="fw-semibold">{{ tutorial.title }}</div>
+              <small class="text-secondary">{{ tutorial.description }}</small>
+            </div>
+            <span class="badge bg-info text-dark">{{ tutorial.einwohner | number }}</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-3 d-flex flex-wrap gap-2 align-items-center">
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="removeAllTutorials()"
+          [disabled]="!authService.isAuthenticated()"
+        >
+          Alle löschen
+        </button>
+        <div class="text-muted small" *ngIf="!authService.isAuthenticated()">
+          Anmeldung erforderlich, um Einträge zu löschen.
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <h4>Städteliste</h4>
-    <ul class="list-group">
-      <li
-        class="list-group-item"
-        *ngFor="let tutorial of tutorials; let i = index"
-        [class.active]="i == currentIndex"
-        (click)="setActiveTutorial(tutorial, i)"
-      >
-        {{ tutorial.title }}
-      </li>
-    </ul>
 
-    <button
-      class="m-3 btn btn-sm btn-danger"
-      (click)="removeAllTutorials()"
-      [disabled]="!authService.isAuthenticated()"
-    >
-      Alle löschen
-    </button>
-    <div class="text-muted" *ngIf="!authService.isAuthenticated()">
-      Anmeldung erforderlich, um Einträge zu löschen.
+  <div class="col-lg-4">
+    <div class="glass-card p-4 h-100">
+      <app-tutorial-details
+        [viewMode]="true"
+        [currentTutorial]="currentTutorial"
+      ></app-tutorial-details>
     </div>
-  </div>
-  <div class="col-md-6">
-    <app-tutorial-details
-      [viewMode]="true"
-      [currentTutorial]="currentTutorial"
-    ></app-tutorial-details>
   </div>
 </div>
