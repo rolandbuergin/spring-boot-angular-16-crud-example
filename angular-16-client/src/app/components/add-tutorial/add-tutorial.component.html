@@ -1,82 +1,92 @@
-<div>
-  <div class="submit-form">
-    <div *ngIf="!submitted">
-      <div class="alert alert-info" *ngIf="!authService.isAuthenticated()">
-        Nur angemeldete Redakteure können neue Städte anlegen.
+<div class="glass-card p-4">
+  <div class="section-heading">
+    <span class="dot"></span>
+    <span class="text-uppercase text-muted fw-semibold">Neue Stadt</span>
+  </div>
+  <h3 class="fw-bold mb-3">Frische City anlegen</h3>
+  <p class="text-muted">Sorge für konsistente Daten mit klaren Validierungen und einem luftigen Layout.</p>
+
+  <div *ngIf="!submitted">
+    <div class="alert alert-info alert-soft" *ngIf="!authService.isAuthenticated()">
+      Nur angemeldete Redakteure können neue Städte anlegen.
+    </div>
+    <form #tutorialForm="ngForm" (ngSubmit)="saveTutorial(tutorialForm)" novalidate class="row g-3">
+      <div class="col-md-6">
+        <label for="title" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control input-elevated"
+          id="title"
+          required
+          pattern="^(?!\\s)(?!.*\\s$).+$"
+          [(ngModel)]="tutorial.title"
+          name="title"
+          #title="ngModel"
+        />
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger small">
+          <div *ngIf="title.errors?.['required']">Titel ist erforderlich.</div>
+          <div *ngIf="title.errors?.['pattern'] && hasEdgeWhitespace(tutorial.title)">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
+        </div>
       </div>
-      <form #tutorialForm="ngForm" (ngSubmit)="saveTutorial(tutorialForm)" novalidate>
-        <div class="form-group">
-          <label for="title">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="title"
-            required
-            pattern="^(?!\\s)(?!.*\\s$).+$"
-            [(ngModel)]="tutorial.title"
-            name="title"
-            #title="ngModel"
-          />
-          <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger small">
-            <div *ngIf="title.errors?.['required']">Titel ist erforderlich.</div>
-            <div *ngIf="title.errors?.['pattern'] && hasEdgeWhitespace(tutorial.title)">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
-          </div>
+
+      <div class="col-md-6">
+        <label for="description" class="form-label">Description</label>
+        <input
+          class="form-control input-elevated"
+          id="description"
+          required
+          pattern="^(?!\\s)(?!.*\\s$).+$"
+          [(ngModel)]="tutorial.description"
+          name="description"
+          #description="ngModel"
+        />
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger small">
+          <div *ngIf="description.errors?.['required']">Beschreibung ist erforderlich.</div>
+          <div *ngIf="description.errors?.['pattern'] && hasEdgeWhitespace(tutorial.description)">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="description">Description</label>
-          <input
-            class="form-control"
-            id="description"
-            required
-            pattern="^(?!\\s)(?!.*\\s$).+$"
-            [(ngModel)]="tutorial.description"
-            name="description"
-            #description="ngModel"
-          />
-          <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger small">
-            <div *ngIf="description.errors?.['required']">Beschreibung ist erforderlich.</div>
-            <div *ngIf="description.errors?.['pattern'] && hasEdgeWhitespace(tutorial.description)">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
-          </div>
+      <div class="col-md-6">
+        <label for="einwohner" class="form-label">Einwohner</label>
+        <input
+          type="number"
+          class="form-control input-elevated"
+          id="einwohner"
+          required
+          min="0"
+          step="1"
+          pattern="^[0-9]+$"
+          inputmode="numeric"
+          [(ngModel)]="tutorial.einwohner"
+          name="einwohner"
+          #einwohner="ngModel"
+        />
+        <div *ngIf="einwohner.invalid && (einwohner.dirty || einwohner.touched)" class="text-danger small">
+          <div *ngIf="einwohner.errors?.['required']">Einwohner ist erforderlich.</div>
+          <div *ngIf="einwohner.errors?.['min']">Einwohner darf nicht negativ sein.</div>
+          <div *ngIf="einwohner.errors?.['pattern']">Einwohner muss eine ganze Zahl sein.</div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="einwohner">Einwohner</label>
-          <input
-            type="number"
-            class="form-control"
-            id="einwohner"
-            required
-            min="0"
-            step="1"
-            pattern="^[0-9]+$"
-            inputmode="numeric"
-            [(ngModel)]="tutorial.einwohner"
-            name="einwohner"
-            #einwohner="ngModel"
-          />
-          <div *ngIf="einwohner.invalid && (einwohner.dirty || einwohner.touched)" class="text-danger small">
-            <div *ngIf="einwohner.errors?.['required']">Einwohner ist erforderlich.</div>
-            <div *ngIf="einwohner.errors?.['min']">Einwohner darf nicht negativ sein.</div>
-            <div *ngIf="einwohner.errors?.['pattern']">Einwohner muss eine ganze Zahl sein.</div>
-          </div>
-        </div>
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
 
-        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
-
+      <div class="col-12 d-flex gap-2 mt-2">
         <button
           type="submit"
-          class="btn btn-success"
+          class="btn btn-brand"
           [disabled]="tutorialForm.invalid || !authService.isAuthenticated()"
         >
           Speichern
         </button>
-      </form>
-    </div>
+        <button type="button" class="btn btn-outline-secondary" (click)="newTutorial()">Zurücksetzen</button>
+      </div>
+    </form>
+  </div>
 
-    <div *ngIf="submitted">
-      <h4>Tutorial was submitted successfully!</h4>
-      <button class="btn btn-success" (click)="newTutorial()">Add</button>
-    </div>
+  <div *ngIf="submitted" class="text-center py-4">
+    <div class="emoji mb-2">🎉</div>
+    <h4 class="fw-bold">Tutorial was submitted successfully!</h4>
+    <p class="text-muted">Lege gerne direkt die nächste Stadt an.</p>
+    <button class="btn btn-brand" (click)="newTutorial()">Neue Stadt erfassen</button>
   </div>
 </div>

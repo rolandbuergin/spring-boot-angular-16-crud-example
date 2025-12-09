@@ -6,3 +6,11 @@
 .alert-info {
   margin-top: 1rem;
 }
+
+.admin-shell {
+  border-radius: 20px;
+}
+
+.btn-brand {
+  color: #fff;
+}
