@@ -1,10 +1,18 @@
-<div>
+<div class="glass-card p-4">
   <div class="submit-form">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <p class="muted-label mb-1">Neue Stadt</p>
+        <h4 class="mb-0">Frisches Profil hinzufügen</h4>
+      </div>
+      <span class="pill-tag">Redakteur</span>
+    </div>
+
     <div *ngIf="!submitted">
       <div class="alert alert-info" *ngIf="!authService.isAuthenticated()">
         Nur angemeldete Redakteure können neue Städte anlegen.
       </div>
-      <form #tutorialForm="ngForm" (ngSubmit)="saveTutorial(tutorialForm)" novalidate>
+      <form #tutorialForm="ngForm" (ngSubmit)="saveTutorial(tutorialForm)" novalidate class="d-grid gap-3">
         <div class="form-group">
           <label for="title">Name</label>
           <input
@@ -24,7 +32,7 @@
         </div>
 
         <div class="form-group">
-          <label for="description">Description</label>
+          <label for="description">Beschreibung</label>
           <input
             class="form-control"
             id="description"
@@ -74,9 +82,9 @@
       </form>
     </div>
 
-    <div *ngIf="submitted">
-      <h4>Tutorial was submitted successfully!</h4>
-      <button class="btn btn-success" (click)="newTutorial()">Add</button>
+    <div *ngIf="submitted" class="text-center py-4">
+      <h4 class="mb-3">Stadt wurde erfolgreich angelegt!</h4>
+      <button class="btn btn-success" (click)="newTutorial()">Weitere Stadt hinzufügen</button>
     </div>
   </div>
 </div>

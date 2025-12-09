@@ -1,6 +1,9 @@
-<div *ngIf="isAuthenticated; else loginForm">
+<div *ngIf="isAuthenticated; else loginForm" class="glass-card p-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Admin-Bereich</h3>
+    <div>
+      <p class="muted-label mb-1">Verwaltung</p>
+      <h3 class="mb-0">Admin-Bereich</h3>
+    </div>
     <button class="btn btn-outline-secondary btn-sm" (click)="logout()">Logout</button>
   </div>
 
@@ -18,7 +21,7 @@
             <th scope="col">Name</th>
             <th scope="col">Beschreibung</th>
             <th scope="col">Einwohner</th>
-            <th scope="col" class="text-right">Aktionen</th>
+            <th scope="col" class="text-end">Aktionen</th>
           </tr>
         </thead>
         <tbody>
@@ -26,7 +29,7 @@
             <td>{{ tutorial.title }}</td>
             <td>{{ tutorial.description }}</td>
             <td>{{ tutorial.einwohner }}</td>
-            <td class="text-right">
+            <td class="text-end">
               <button
                 class="btn btn-sm btn-danger"
                 (click)="deleteTutorial(tutorial.id)"

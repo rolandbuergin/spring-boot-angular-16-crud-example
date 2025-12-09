@@ -1,5 +1,14 @@
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
+.muted-help {
+  font-size: 0.9rem;
+}
+
+.list-group.city-list {
+  overflow: auto;
+  max-height: 520px;
+  scrollbar-width: thin;
+}
+
+.city-list .badge {
+  padding: 0.55rem 0.75rem;
+  border-radius: 12px;
 }

@@ -1,34 +1,70 @@
-<div>
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">bezKoder</a>
-    <div class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a routerLink="tutorials" class="nav-link">Städte</a>
-      </li>
-      <li class="nav-item" *ngIf="isAuthenticated">
-        <a routerLink="add" class="nav-link">Hinzufügen</a>
-      </li>
-    </div>
-    <div class="navbar-nav ms-auto">
-      <li class="nav-item" *ngIf="!isAuthenticated">
-        <a routerLink="login" class="nav-link">Anmelden</a>
-      </li>
-      <li class="nav-item" *ngIf="!isAuthenticated">
-        <a routerLink="register" class="nav-link">Registrieren</a>
-      </li>
-      <li class="nav-item" *ngIf="isAuthenticated">
-        <span class="navbar-text text-white me-3">Hallo, {{ username }}</span>
-      </li>
-      <li class="nav-item" *ngIf="isAuthenticated">
-        <a class="nav-link" (click)="logout()" routerLink="/">Abmelden</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="admin" class="nav-link">Admin</a>
-      </li>
+<div class="app-shell">
+  <nav class="navbar navbar-expand-lg glass-nav">
+    <div class="container-fluid">
+      <a routerLink="/" class="navbar-brand brand-mark">
+        <span>CS</span>
+        CityScope
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navMenu"
+        aria-controls="navMenu"
+        aria-expanded="false"
+        aria-label="Navigation umschalten"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a routerLink="tutorials" class="nav-link" routerLinkActive="active">Städte</a>
+          </li>
+          <li class="nav-item" *ngIf="isAuthenticated">
+            <a routerLink="add" class="nav-link" routerLinkActive="active">Hinzufügen</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
+          <li class="nav-item" *ngIf="!isAuthenticated">
+            <a routerLink="login" class="nav-link" routerLinkActive="active">Anmelden</a>
+          </li>
+          <li class="nav-item" *ngIf="!isAuthenticated">
+            <a routerLink="register" class="nav-link" routerLinkActive="active">Registrieren</a>
+          </li>
+          <li class="nav-item d-flex align-items-center" *ngIf="isAuthenticated">
+            <span class="navbar-text text-white-50 me-3">Hallo, {{ username }}</span>
+          </li>
+          <li class="nav-item" *ngIf="isAuthenticated">
+            <a class="nav-link" (click)="logout()" routerLink="/">Abmelden</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="admin" class="nav-link" routerLinkActive="active">Admin</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <div class="container mt-3">
-    <router-outlet></router-outlet>
-  </div>
+  <header class="page-hero">
+    <div class="container hero-content">
+      <span class="eyebrow">Editor Dashboard</span>
+      <h1>Verwaltete Städtebibliothek mit glänzendem Look.</h1>
+      <p class="lead">
+        Entdecke, sammle und pflege Städte mit einem modernen Interface. Suche nach Orten,
+        bearbeite Details oder lege neue Datensätze an – alles in einem eleganten Dashboard.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="tutorials" class="btn btn-pill btn-highlight">Städte öffnen</a>
+        <a routerLink="add" class="btn btn-pill" *ngIf="isAuthenticated">Neue Stadt anlegen</a>
+        <a routerLink="admin" class="btn btn-pill">Admin-Ansicht</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout-container">
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 </div>
