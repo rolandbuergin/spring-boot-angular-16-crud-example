@@ -1,4 +1,11 @@
-.submit-form {
-  max-width: 400px;
-  margin: auto;
+.add-card {
+  max-width: 680px;
+  margin: 0 auto;
+  border: 1px solid rgba(27, 52, 94, 0.08);
+  box-shadow: 0 12px 32px rgba(63, 80, 116, 0.15);
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(91, 141, 239, 0.2);
+  border-color: rgba(91, 141, 239, 0.6);
 }

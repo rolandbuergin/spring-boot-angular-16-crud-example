@@ -1,4 +1,33 @@
-.edit-form {
-  max-width: 400px;
-  margin: auto;
+.edit-form,
+.detail-card {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(27, 52, 94, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(63, 80, 116, 0.15);
+}
+
+.detail-card .info-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.placeholder {
+  background: rgba(91, 141, 239, 0.06);
+  border-radius: 12px;
+}
+
+.btn-group .btn {
+  border-radius: 10px !important;
+}
+
+.action-toggle {
+  gap: 8px;
+}
+
+.action-buttons {
+  gap: 10px;
 }

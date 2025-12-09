@@ -1,5 +1,37 @@
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.search-panel .input-group .form-control:focus {
+  box-shadow: none;
+}
+
+.custom-list {
+  max-height: 520px;
+  overflow: auto;
+}
+
+.custom-list .list-group-item {
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.custom-list .list-group-item:hover {
+  border-color: rgba(91, 141, 239, 0.25);
+  transform: translateY(-1px);
+}
+
+.custom-list .active {
+  background: linear-gradient(135deg, rgba(91, 141, 239, 0.12), rgba(142, 95, 231, 0.12));
+  border-color: rgba(91, 141, 239, 0.3);
+}
+
+.badge-pill {
+  background: rgba(91, 141, 239, 0.12);
+  color: #3a4560;
+  font-weight: 700;
+  border: 1px solid rgba(91, 141, 239, 0.35);
 }

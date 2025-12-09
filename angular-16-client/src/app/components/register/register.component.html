@@ -1,8 +1,9 @@
-<div class="auth-card">
-  <h4>Redakteur registrieren</h4>
+<div class="auth-card glass-card p-4 p-md-5">
+  <p class="text-uppercase text-muted small mb-1">Redaktion</p>
+  <h3 class="mb-3">Neuen Nutzer registrieren</h3>
   <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
     <div class="form-group mb-3">
-      <label for="username">Benutzername</label>
+      <label for="username" class="form-label">Benutzername</label>
       <input
         id="username"
         name="username"
@@ -13,7 +14,7 @@
     </div>
 
     <div class="form-group mb-3">
-      <label for="password">Passwort</label>
+      <label for="password" class="form-label">Passwort</label>
       <input
         id="password"
         name="password"
@@ -25,7 +26,7 @@
     </div>
 
     <div class="form-group mb-3">
-      <label for="confirmPassword">Passwort bestätigen</label>
+      <label for="confirmPassword" class="form-label">Passwort bestätigen</label>
       <input
         id="confirmPassword"
         name="confirmPassword"
@@ -36,7 +37,7 @@
       />
     </div>
 
-    <button class="btn btn-success" [disabled]="registerForm.invalid">Registrieren</button>
+    <button class="btn btn-accent w-100" [disabled]="registerForm.invalid">Registrieren</button>
   </form>
 
   <div *ngIf="message" class="alert alert-success mt-3">{{ message }}</div>

@@ -1,8 +1,13 @@
 .auth-card {
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(27, 52, 94, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(63, 80, 116, 0.12);
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(91, 141, 239, 0.2);
+  border-color: rgba(91, 141, 239, 0.6);
 }
