@@ -1,5 +1,40 @@
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
+.page-header h2 {
+  color: #0b1021;
+}
+
+.search-group .input-group-text {
+  background: #fff;
+  border: 1px solid #d6d9e0;
+  border-radius: 12px 0 0 12px;
+  padding: 12px 14px;
+}
+
+.search-group .form-control {
+  border-left: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.search-group .btn {
+  border-radius: 0 12px 12px 0;
+}
+
+.city-list .city-row {
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.city-list .city-row:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.city-list .city-row.active {
+  background: linear-gradient(135deg, rgba(90, 103, 216, 0.08), rgba(244, 114, 182, 0.08));
+  border-left: 4px solid #5a67d8;
+}
+
+.city-list .badge-soft {
+  font-size: 0.75rem;
 }

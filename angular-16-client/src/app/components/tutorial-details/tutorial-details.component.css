@@ -1,4 +1,40 @@
-.edit-form {
-  max-width: 400px;
-  margin: auto;
+.details-view {
+  color: #0b1021;
+}
+
+.detail-tile {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.detail-tile .label {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.detail-tile .value {
+  font-weight: 700;
+  color: #0b1021;
+}
+
+.empty-card {
+  padding: 36px 20px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px dashed #d6d9e0;
+}
+
+.empty-card .emoji {
+  font-size: 2rem;
+}
+
+.edit-form .form-label {
+  font-weight: 600;
+}
+
+.edit-form .btn-brand {
+  color: #fff;
 }

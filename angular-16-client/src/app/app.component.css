@@ -1,0 +1,64 @@
+.topbar {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(67, 56, 202, 0.9));
+  color: #fff;
+  border-radius: 0 0 32px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 36px;
+}
+
+.nav-link {
+  color: #e2e8f0 !important;
+  font-weight: 600;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #fff !important;
+}
+
+.logo-badge {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #5a67d8, #f472b6);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(90, 103, 216, 0.4);
+}
+
+.brand-title {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+.user-chip {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.hero {
+  padding: 36px 0 12px;
+}
+
+.hero .stat-number {
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.hero .stat-label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.stats-card {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(90, 103, 216, 0.8), rgba(15, 23, 42, 0.7));
+}

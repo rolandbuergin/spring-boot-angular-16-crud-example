@@ -1,2 +1,114 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles and theme tokens */
 @import "~bootstrap/dist/css/bootstrap.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --primary: #5a67d8;
+  --primary-dark: #4338ca;
+  --accent: #f472b6;
+  --surface: #0f172a;
+  --muted: #e2e8f0;
+  --card-bg: rgba(255, 255, 255, 0.94);
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: radial-gradient(circle at 20% 20%, rgba(244, 114, 182, 0.15), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(80, 102, 255, 0.2), transparent 32%),
+    radial-gradient(circle at 30% 80%, rgba(94, 234, 212, 0.18), transparent 28%),
+    #0b1021;
+  color: #0f172a;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--primary);
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 32px 16px 48px;
+}
+
+.container-narrow {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.glass-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.btn-brand {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  border: none;
+  box-shadow: 0 12px 30px rgba(74, 86, 226, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-brand:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(74, 86, 226, 0.45);
+  color: #fff;
+}
+
+.badge-soft {
+  background: rgba(90, 103, 216, 0.1);
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 600;
+}
+
+.input-elevated {
+  border-radius: 12px;
+  border: 1px solid #d6d9e0;
+  padding: 12px 14px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: #0b1021;
+}
+
+.section-heading .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+.table-modern thead th {
+  background: #0f172a;
+  color: #e2e8f0;
+  border: none;
+}
+
+table.table-modern td {
+  border-color: #edf2f7;
+}
+
+.alert-soft {
+  border-radius: 12px;
+}

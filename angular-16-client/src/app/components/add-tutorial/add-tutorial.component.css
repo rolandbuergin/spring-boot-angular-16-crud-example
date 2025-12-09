@@ -1,4 +1,15 @@
-.submit-form {
-  max-width: 400px;
-  margin: auto;
+.glass-card {
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.form-label {
+  font-weight: 600;
+}
+
+.btn-brand {
+  color: #fff;
+}
+
+.emoji {
+  font-size: 2rem;
 }

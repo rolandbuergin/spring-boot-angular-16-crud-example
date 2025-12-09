@@ -1,34 +1,106 @@
-<div>
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">bezKoder</a>
-    <div class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a routerLink="tutorials" class="nav-link">Städte</a>
-      </li>
-      <li class="nav-item" *ngIf="isAuthenticated">
-        <a routerLink="add" class="nav-link">Hinzufügen</a>
-      </li>
-    </div>
-    <div class="navbar-nav ms-auto">
-      <li class="nav-item" *ngIf="!isAuthenticated">
-        <a routerLink="login" class="nav-link">Anmelden</a>
-      </li>
-      <li class="nav-item" *ngIf="!isAuthenticated">
-        <a routerLink="register" class="nav-link">Registrieren</a>
-      </li>
-      <li class="nav-item" *ngIf="isAuthenticated">
-        <span class="navbar-text text-white me-3">Hallo, {{ username }}</span>
-      </li>
-      <li class="nav-item" *ngIf="isAuthenticated">
-        <a class="nav-link" (click)="logout()" routerLink="/">Abmelden</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="admin" class="nav-link">Admin</a>
-      </li>
-    </div>
-  </nav>
+<div class="app-shell">
+  <header class="topbar glass-card">
+    <nav class="navbar navbar-expand-lg py-3">
+      <div class="container-narrow d-flex w-100 justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2 brand">
+          <div class="logo-badge">BK</div>
+          <div>
+            <div class="brand-title">bezKoder Atlas</div>
+            <small class="text-muted">Modernes Städte-Dashboard</small>
+          </div>
+        </div>
 
-  <div class="container mt-3">
-    <router-outlet></router-outlet>
-  </div>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav align-items-center gap-2">
+            <li class="nav-item">
+              <a routerLink="tutorials" class="nav-link">Städte</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated">
+              <a routerLink="add" class="nav-link">Hinzufügen</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="admin" class="nav-link">Admin</a>
+            </li>
+            <li class="nav-item d-flex align-items-center" *ngIf="isAuthenticated">
+              <span class="user-chip">Hallo, {{ username }}</span>
+            </li>
+            <li class="nav-item" *ngIf="!isAuthenticated">
+              <a routerLink="login" class="btn btn-outline-light rounded-pill px-3">Anmelden</a>
+            </li>
+            <li class="nav-item" *ngIf="!isAuthenticated">
+              <a routerLink="register" class="btn btn-brand rounded-pill px-3">Registrieren</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated">
+              <a class="btn btn-outline-light rounded-pill px-3" (click)="logout()" routerLink="/">Abmelden</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero container-narrow">
+      <div class="badge-soft mb-3">City Insights</div>
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <h1 class="display-5 fw-bold text-white">Entdecke und kuratiere die spannendsten Städte Europas.</h1>
+          <p class="lead text-light opacity-75">
+            Smarte Filter, elegante Karten und ein nahtloses Admin-Panel machen das Pflegen deiner Städtedaten jetzt richtig stylisch.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a routerLink="tutorials" class="btn btn-brand btn-lg rounded-pill px-4">Städte entdecken</a>
+            <a
+              routerLink="add"
+              class="btn btn-outline-light btn-lg rounded-pill px-4"
+              *ngIf="isAuthenticated"
+            >
+              Neue Stadt anlegen
+            </a>
+            <a routerLink="login" class="btn btn-outline-light btn-lg rounded-pill px-4" *ngIf="!isAuthenticated">
+              Redaktion anmelden
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="stats-card glass-card p-4 text-white">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge-soft">Live Übersicht</span>
+              <span class="small text-light">Aktualisiert</span>
+            </div>
+            <div class="row text-center">
+              <div class="col-4">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Städte</div>
+              </div>
+              <div class="col-4">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Stories</div>
+              </div>
+              <div class="col-4">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Admin</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main class="main-content">
+    <div class="container-narrow">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 </div>
