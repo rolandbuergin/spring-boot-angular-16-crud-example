@@ -1,48 +1,73 @@
-<div class="list row">
-  <div class="col-md-8">
-    <div class="input-group mb-3">
+<div class="page-grid">
+  <div class="glass-card p-4 search-panel">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <p class="text-uppercase text-muted small mb-1">Explorer</p>
+        <h4 class="mb-0">Städte entdecken</h4>
+      </div>
+      <span class="badge bg-light text-dark">Live Suche</span>
+    </div>
+    <div class="input-group shadow-sm">
+      <span class="input-group-text bg-white border-0">
+        <span class="text-muted">🔍</span>
+      </span>
       <input
         type="text"
-        class="form-control"
-        placeholder="Search by title"
+        class="form-control border-0"
+        placeholder="Nach Städtenamen suchen"
         [(ngModel)]="title"
       />
-      <div class="input-group-append">
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          (click)="searchTitle()"
-        >
-          Search
-        </button>
-      </div>
+      <button
+        class="btn btn-accent px-3"
+        type="button"
+        (click)="searchTitle()"
+      >
+        Finden
+      </button>
     </div>
   </div>
-  <div class="col-md-6">
-    <h4>Städteliste</h4>
-    <ul class="list-group">
+
+  <div class="glass-card p-4 list-panel">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <p class="text-uppercase text-muted small mb-1">Katalog</p>
+        <h4 class="mb-0">Städteliste</h4>
+      </div>
+      <button
+        class="btn btn-outline-danger btn-sm"
+        (click)="removeAllTutorials()"
+        [disabled]="!authService.isAuthenticated()"
+      >
+        Alle löschen
+      </button>
+    </div>
+    <div class="text-muted mb-2" *ngIf="!authService.isAuthenticated()">
+      Anmeldung erforderlich, um Einträge zu löschen.
+    </div>
+    <ul class="list-group custom-list">
       <li
-        class="list-group-item"
+        class="list-group-item d-flex align-items-center justify-content-between"
         *ngFor="let tutorial of tutorials; let i = index"
         [class.active]="i == currentIndex"
         (click)="setActiveTutorial(tutorial, i)"
       >
-        {{ tutorial.title }}
+        <div>
+          <div class="fw-semibold">{{ tutorial.title }}</div>
+          <small class="text-muted">{{ tutorial.description }}</small>
+        </div>
+        <span class="badge badge-pill bg-light text-dark">{{ tutorial.einwohner | number }}</span>
       </li>
     </ul>
-
-    <button
-      class="m-3 btn btn-sm btn-danger"
-      (click)="removeAllTutorials()"
-      [disabled]="!authService.isAuthenticated()"
-    >
-      Alle löschen
-    </button>
-    <div class="text-muted" *ngIf="!authService.isAuthenticated()">
-      Anmeldung erforderlich, um Einträge zu löschen.
-    </div>
   </div>
-  <div class="col-md-6">
+
+  <div class="glass-card p-4 detail-panel">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <p class="text-uppercase text-muted small mb-1">Details</p>
+        <h4 class="mb-0">Stadtprofil</h4>
+      </div>
+      <span class="badge bg-primary-subtle text-primary">Live Vorschau</span>
+    </div>
     <app-tutorial-details
       [viewMode]="true"
       [currentTutorial]="currentTutorial"

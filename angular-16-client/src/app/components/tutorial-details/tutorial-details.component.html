@@ -1,43 +1,48 @@
 <div *ngIf="viewMode; else editable">
-  <div *ngIf="currentTutorial.id">
-    <h4>Tutorial</h4>
-    <div>
-      <label><strong>Name:</strong></label> {{ currentTutorial.title }}
+  <div *ngIf="currentTutorial.id; else choose">
+    <div class="detail-card">
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+          <p class="text-uppercase text-muted small mb-1">Auswahl</p>
+          <h4 class="mb-0">{{ currentTutorial.title }}</h4>
+        </div>
+        <span class="badge bg-success-subtle text-success">{{ currentTutorial.published ? 'Published' : 'Pending' }}</span>
+      </div>
+      <div class="info-row">
+        <div>
+          <label class="text-muted d-block small">Beschreibung</label>
+          <p class="mb-0 fw-semibold">{{ currentTutorial.description }}</p>
+        </div>
+        <div>
+          <label class="text-muted d-block small">Einwohner</label>
+          <p class="mb-0 fw-semibold">{{ currentTutorial.einwohner | number }}</p>
+        </div>
+      </div>
+      <a class="btn btn-outline-primary w-100 mt-3" routerLink="/tutorials/{{ currentTutorial.id }}">Bearbeiten</a>
     </div>
-    <div>
-      <label><strong>Description:</strong></label>
-      {{ currentTutorial.description }}
-    </div>
-    <div>
-      <label><strong>Einwohner:</strong></label>
-      {{ currentTutorial.einwohner }}
-    </div>
-    <div>
-      <label><strong>Status:</strong></label>
-      {{ currentTutorial.published ? "Published" : "Pending" }}
-    </div>
-
-    <a class="badge badge-warning"
-      routerLink="/tutorials/{{ currentTutorial.id }}">
-      Edit
-    </a>
   </div>
-
-  <div *ngIf="!currentTutorial">
-    <br />
-    <p>Please click on a Tutorial...</p>
-  </div>
+  <ng-template #choose>
+    <div class="placeholder text-center py-3 text-muted">Bitte eine Stadt auswählen, um Details anzuzeigen.</div>
+  </ng-template>
 </div>
 
 <ng-template #editable>
-  <div *ngIf="currentTutorial.id" class="edit-form">
-    <h4>Tutorial</h4>
+  <div *ngIf="currentTutorial.id; else locked" class="edit-form">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <p class="text-uppercase text-muted small mb-1">Bearbeitung</p>
+        <h4 class="mb-0">{{ currentTutorial.title }}</h4>
+      </div>
+      <span class="badge bg-info-subtle text-info">Admin &amp; Redakteur</span>
+    </div>
+
     <div class="alert alert-info" *ngIf="!authService.isAuthenticated()">
       Änderungen sind nur nach Anmeldung als Redakteur möglich.
     </div>
+
     <form #updateForm="ngForm" (ngSubmit)="updateTutorial(updateForm)" novalidate>
-      <div class="form-group">
-        <label for="title">Name</label>
+      <div class="form-group mb-3">
+        <label for="title" class="form-label">Name</label>
         <input
           type="text"
           class="form-control"
@@ -53,8 +58,8 @@
           <div *ngIf="title.errors?.['pattern'] && hasEdgeWhitespace(currentTutorial.title)">Kein führendes oder abschließendes Leerzeichen erlaubt.</div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="description">Description</label>
+      <div class="form-group mb-3">
+        <label for="description" class="form-label">Description</label>
         <input
           type="text"
           class="form-control"
@@ -71,8 +76,8 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="einwohner">Einwohner</label>
+      <div class="form-group mb-3">
+        <label for="einwohner" class="form-label">Einwohner</label>
         <input
           type="number"
           class="form-control"
@@ -93,47 +98,52 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentTutorial.published ? "Published" : "Pending" }}
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+          <label class="text-muted d-block small">Status</label>
+          <span class="badge bg-light text-dark">{{ currentTutorial.published ? "Published" : "Pending" }}</span>
+        </div>
+        <div class="btn-group action-toggle d-flex flex-wrap">
+          <button
+            class="btn btn-outline-primary"
+            *ngIf="currentTutorial.published"
+            (click)="updatePublished(false)"
+            [disabled]="!authService.isAuthenticated()"
+            type="button"
+          >
+            UnPublish
+          </button>
+          <button
+            *ngIf="!currentTutorial.published"
+            class="btn btn-outline-primary"
+            (click)="updatePublished(true)"
+            [disabled]="!authService.isAuthenticated()"
+            type="button"
+          >
+            Publish
+          </button>
+        </div>
       </div>
     </form>
 
-    <button
-      class="badge badge-primary mr-2"
-      *ngIf="currentTutorial.published"
-      (click)="updatePublished(false)"
-      [disabled]="!authService.isAuthenticated()"
-    >
-      UnPublish
-    </button>
-    <button
-      *ngIf="!currentTutorial.published"
-      class="badge badge-primary mr-2"
-      (click)="updatePublished(true)"
-      [disabled]="!authService.isAuthenticated()"
-    >
-      Publish
-    </button>
-
-    <button class="badge badge-danger mr-2" (click)="deleteTutorial()" [disabled]="!authService.isAuthenticated()">
-      Delete
-    </button>
-
-    <button
-      type="submit"
-      class="badge badge-success mb-2"
-      (click)="updateTutorial(updateForm)"
-      [disabled]="updateForm.invalid || !authService.isAuthenticated()"
-    >
-      Update
-    </button>
+    <div class="d-flex flex-wrap action-buttons mb-3">
+      <button class="btn btn-outline-danger" (click)="deleteTutorial()" [disabled]="!authService.isAuthenticated()">
+        Delete
+      </button>
+      <button
+        type="submit"
+        class="btn btn-accent"
+        (click)="updateTutorial(updateForm)"
+        [disabled]="updateForm.invalid || !authService.isAuthenticated()"
+      >
+        Update
+      </button>
+    </div>
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
-    <p>{{ message }}</p>
+    <p class="text-success" *ngIf="message">{{ message }}</p>
   </div>
 
-  <div *ngIf="!currentTutorial.id">
-    <br />
-    <p>Cannot access this Tutorial...</p>
-  </div>
+  <ng-template #locked>
+    <div class="placeholder text-center py-3 text-muted">Cannot access this Tutorial...</div>
+  </ng-template>
 </ng-template>

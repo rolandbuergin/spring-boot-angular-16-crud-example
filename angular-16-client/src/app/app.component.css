@@ -1,0 +1,117 @@
+.app-header {
+  position: relative;
+  padding: 20px 0 10px;
+}
+
+.glass-nav {
+  border-radius: 16px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, rgba(91, 141, 239, 0.85), rgba(142, 95, 231, 0.85));
+  box-shadow: 0 14px 36px rgba(91, 141, 239, 0.25);
+}
+
+.nav-shell {
+  gap: 12px;
+}
+
+.nav-links .nav-item,
+.nav-actions .nav-item {
+  margin-right: 12px;
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  letter-spacing: 0.3px;
+}
+
+.brand-mark {
+  font-size: 1.4rem;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.navbar-text {
+  color: #fff !important;
+}
+
+.hero {
+  padding: 10px 0 30px;
+}
+
+.hero .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  font-weight: 700;
+  color: #5b8def;
+  margin-bottom: 8px;
+}
+
+.hero .lead {
+  max-width: 560px;
+}
+
+.hero-actions {
+  gap: 12px;
+}
+
+.hero-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 10%, rgba(91, 141, 239, 0.18), transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(142, 95, 231, 0.18), transparent 45%);
+  z-index: 0;
+}
+
+.hero-card * {
+  position: relative;
+  z-index: 1;
+}
+
+.pill-outline {
+  border: 1px solid rgba(91, 141, 239, 0.35);
+  color: #3a4560;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #5b8def);
+  box-shadow: 0 0 12px rgba(91, 141, 239, 0.8);
+}
+
+.progress-bar {
+  background: linear-gradient(135deg, #5b8def, #8e5fe7);
+}
+
+@media (max-width: 767px) {
+  .glass-nav {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .hero {
+    padding: 0 12px 24px;
+  }
+
+  .nav-links .nav-item,
+  .nav-actions .nav-item {
+    margin-right: 8px;
+  }
+}
