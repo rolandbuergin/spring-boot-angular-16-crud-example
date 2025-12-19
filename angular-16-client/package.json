@@ -9,7 +9,8 @@
     "test": "ng test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "storybook test --watch=false"
+    "test-storybook": "storybook test --watch=false",
+    "test:e2e": "playwright test"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +37,7 @@
     "@storybook/jest": "^0.2.2",
     "@storybook/test-runner": "^0.17.0",
     "@storybook/testing-library": "^0.2.2",
+    "@playwright/test": "^1.45.3",
     "storybook": "^7.6.17",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.6.0",
