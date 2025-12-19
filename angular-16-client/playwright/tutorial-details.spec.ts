@@ -5,6 +5,12 @@ const storedCredentials = {
   token: 'ZWRpdG9yOnNlY3JldA==',
 };
 
+const corsHeaders = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET,POST,PUT,DELETE,OPTIONS',
+  'access-control-allow-headers': 'Content-Type, Authorization',
+};
+
 test.beforeEach(async ({ context }) => {
   await context.addInitScript((credentials) => {
     localStorage.setItem('editor-auth', JSON.stringify(credentials));
@@ -26,10 +32,19 @@ test('Editor kann Details anpassen und veröffentlichen', async ({ page }) => {
   await page.route('**/api/tutorials/1', async (route) => {
     const { method } = route.request();
 
+    if (method === 'OPTIONS') {
+      await route.fulfill({
+        status: 204,
+        headers: corsHeaders,
+      });
+      return;
+    }
+
     if (method === 'GET') {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
+        headers: corsHeaders,
         body: JSON.stringify(tutorial),
       });
       return;
@@ -44,6 +59,7 @@ test('Editor kann Details anpassen und veröffentlichen', async ({ page }) => {
         await route.fulfill({
           status: 200,
           contentType: 'application/json',
+          headers: corsHeaders,
           body: JSON.stringify({ ...tutorial, ...payload, message: 'The status was updated successfully!' }),
         });
         return;
@@ -53,6 +69,7 @@ test('Editor kann Details anpassen und veröffentlichen', async ({ page }) => {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
+        headers: corsHeaders,
         body: JSON.stringify({ ...tutorial, ...payload, message: 'This tutorial was updated successfully!' }),
       });
       return;
