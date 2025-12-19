@@ -5,6 +5,7 @@ import { expect } from '@storybook/jest';
 import { of } from 'rxjs';
 import { AddTutorialComponent } from '../app/components/add-tutorial/add-tutorial.component';
 import { TutorialService } from '../app/services/tutorial.service';
+import { AuthService } from '../app/services/auth.service';
 
 class MockTutorialService {
   lastPayload: any;
@@ -15,13 +16,22 @@ class MockTutorialService {
   }
 }
 
+class MockAuthService {
+  isAuthenticated(): boolean {
+    return true;
+  }
+}
+
 const meta: Meta<AddTutorialComponent> = {
   title: 'Components/AddTutorialComponent',
   component: AddTutorialComponent,
   decorators: [
     moduleMetadata({
       imports: [FormsModule],
-      providers: [{ provide: TutorialService, useClass: MockTutorialService }],
+      providers: [
+        { provide: TutorialService, useClass: MockTutorialService },
+        { provide: AuthService, useClass: MockAuthService }
+      ],
     }),
   ],
 };
@@ -34,7 +44,7 @@ export const EmptyForm: Story = {
   name: 'Leeres Formular',
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const submitButton = await canvas.findByRole('button', { name: /submit/i });
+    const submitButton = await canvas.findByRole('button', { name: /speichern/i });
     await expect(submitButton).toBeDisabled();
   },
 };
@@ -48,11 +58,11 @@ export const SuccessfulSubmission: Story = {
     await userEvent.type(canvas.getByLabelText(/description/i), 'Hauptstadt');
     await userEvent.type(canvas.getByLabelText(/einwohner/i), '3645000');
 
-    const submitButton = await canvas.findByRole('button', { name: /submit/i });
+    const submitButton = await canvas.findByRole('button', { name: /speichern/i });
     await expect(submitButton).toBeEnabled();
 
     await userEvent.click(submitButton);
 
-    await expect(await canvas.findByText(/submitted successfully/i)).toBeInTheDocument();
+    await expect(await canvas.findByText(/erfolgreich gespeichert/i)).toBeInTheDocument();
   },
 };
