@@ -5,6 +5,12 @@ const storedCredentials = {
   token: 'ZWRpdG9yOnNlY3JldA==',
 };
 
+const corsHeaders = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET,POST,PUT,DELETE,OPTIONS',
+  'access-control-allow-headers': 'Content-Type, Authorization',
+};
+
 test.beforeEach(async ({ context }) => {
   await context.addInitScript((credentials) => {
     localStorage.setItem('editor-auth', JSON.stringify(credentials));
@@ -17,11 +23,20 @@ test('Editor kann eine neue Stadt speichern', async ({ page }) => {
   await page.route('**/api/tutorials', async (route) => {
     const { method } = route.request();
 
+    if (method === 'OPTIONS') {
+      await route.fulfill({
+        status: 204,
+        headers: corsHeaders,
+      });
+      return;
+    }
+
     if (method === 'POST') {
       capturedPayload = route.request().postDataJSON();
       await route.fulfill({
         status: 201,
         contentType: 'application/json',
+        headers: corsHeaders,
         body: JSON.stringify({ id: 101, ...capturedPayload }),
       });
       return;
@@ -31,6 +46,7 @@ test('Editor kann eine neue Stadt speichern', async ({ page }) => {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
+        headers: corsHeaders,
         body: JSON.stringify([]),
       });
       return;
