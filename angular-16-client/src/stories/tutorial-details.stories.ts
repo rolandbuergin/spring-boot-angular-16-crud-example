@@ -6,10 +6,17 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TutorialDetailsComponent } from '../app/components/tutorial-details/tutorial-details.component';
 import { TutorialService } from '../app/services/tutorial.service';
+import { AuthService } from '../app/services/auth.service';
 
 class MockTutorialService {
   update() {
     return of({ message: 'This tutorial was updated successfully!' });
+  }
+}
+
+class MockAuthService {
+  isAuthenticated(): boolean {
+    return true;
   }
 }
 
@@ -27,7 +34,10 @@ const meta: Meta<TutorialDetailsComponent> = {
   decorators: [
     moduleMetadata({
       imports: [FormsModule, RouterTestingModule],
-      providers: [{ provide: TutorialService, useClass: MockTutorialService }],
+      providers: [
+        { provide: TutorialService, useClass: MockTutorialService },
+        { provide: AuthService, useClass: MockAuthService }
+      ],
     }),
   ],
   args: {

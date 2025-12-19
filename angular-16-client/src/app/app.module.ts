@@ -21,7 +21,7 @@ import { AdminComponent } from './components/admin/admin.component';
     TutorialDetailsComponent,
     TutorialsListComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
     AdminComponent
   ],
   imports: [
